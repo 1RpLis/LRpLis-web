@@ -1,220 +1,181 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>LRpLis</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LRpLis</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#1b0000;
+  --primary:#ff4d4d;
+  --text:#ffffff;
+  --muted:#d1a6aa;
+  --radius:12px;
+}
 
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+*{box-sizing:border-box;}
+body,html{margin:0;padding:0;height:100%;scroll-behavior:smooth;font-family:"Cairo",sans-serif;background: var(--bg);color:var(--text);}
+#bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
 
-  <style>
-    :root{
-      --bg:#04070a;
-      --neon:#00d5ff;
-      --muted:#9aa3aa;
-      --radius:16px;
-    }
+/* Nav */
+.nav{
+  display:flex;gap:12px;align-items:center;position:fixed;top:18px;right:24px;z-index:100;
+  background:rgba(0,0,0,0.5);padding:8px 12px;border-radius:999px;
+}
+.nav a{
+  color:var(--muted);font-weight:600;font-size:0.95rem;padding:6px 10px;border-radius:8px;text-decoration:none;
+  transition:0.2s;
+}
+.nav a:hover{color:var(--primary);}
 
-    *{box-sizing:border-box}
-    body,html{margin:0;padding:0;height:100%}
-    body{
-      font-family:"Cairo",sans-serif;
-      background: radial-gradient(circle at 20% 20%, rgba(0,213,255,0.08), transparent 40%),
-                  radial-gradient(circle at 80% 80%, rgba(0,213,255,0.05), transparent 30%),
-                  var(--bg);
-      color:#e7eef3;
-      line-height:1.5;
-      scroll-behavior:smooth;
-      position:relative;
-      overflow-x:hidden;
-    }
+/* Section */
+section{padding:80px 0;min-height:60vh;display:flex;align-items:center;}
+.card{
+  width:100%;background: rgba(50,0,0,0.85);border-radius:var(--radius);
+  padding:34px;text-align:center;transition:0.3s;
+}
+.card:hover{background: rgba(50,0,0,0.95);}
 
-    #bg-canvas{
-      position:fixed;
-      top:0;left:0;
-      width:100%;
-      height:100%;
-      z-index:-1;
-    }
+/* Titles */
+.name{font-size:clamp(2.2rem,5vw,4rem);font-weight:700;color:var(--primary);margin:10px 0;}
+.subtitle{color:var(--primary);font-size:1.2rem;margin-bottom:12px;}
+.intro{font-size:1.15rem;color:var(--text);max-width:820px;margin:auto;line-height:1.6;}
 
-    .container{
-      max-width:1000px;
-      margin:0 auto;
-      padding:40px 24px;
-    }
+/* Socials */
+.socials{margin-top:16px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.socials a{
+  padding:10px 18px;border:1px solid var(--primary);border-radius:8px;color: var(--primary);
+  font-weight:600;background: rgba(255,255,255,0.05);text-decoration:none;transition:0.2s;
+}
+.socials a:hover{background: rgba(255,255,255,0.1);}
 
-    .nav{
-      display:flex;
-      gap:12px;
-      align-items:center;
-      position:fixed;
-      top:18px;
-      right:24px;
-      z-index:100;
-      background:rgba(5,10,15,0.5);
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(0,213,255,0.2);
-      backdrop-filter: blur(6px);
-    }
-    .nav a{color:var(--muted);font-weight:600;font-size:0.95rem;padding:6px 10px;border-radius:8px;text-decoration:none}
-    .nav a:hover{color:var(--neon);text-shadow:0 0 8px var(--neon)}
+/* Languages */
+.langs{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+.lang{padding:10px 16px;border:1px solid var(--primary);border-radius:8px;color:var(--primary);
+  font-weight:600;background: rgba(255,255,255,0.05);transition:0.2s;}
+.lang:hover{background: rgba(255,255,255,0.1);}
 
-    section{
-      padding:80px 0;
-      min-height:60vh;
-      display:flex;
-      align-items:center;
-    }
+/* Skills List */
+.skills-list{text-align:left;max-width:500px;margin:auto;color:var(--muted);line-height:1.8;}
+.skills-list h3{margin-bottom:6px;color:var(--primary);}
+.skills-list ul{margin-bottom:16px;padding-left:20px;}
+.skills-list ul li{transition:0.2s;}
+.skills-list ul li:hover{color:var(--primary);}
 
-    .card{
-      width:100%;
-      background: rgba(10,15,20,0.6);
-      border:1px solid rgba(0,213,255,0.2);
-      border-radius:var(--radius);
-      padding:34px;
-      text-align:center;
-      box-shadow:0 0 30px rgba(0,213,255,0.05);
-      margin:0 auto;
-      max-width:860px;
-    }
-
-    .name{
-      font-size:clamp(2.2rem,5vw,4rem);
-      font-weight:700;
-      color:var(--neon);
-      text-shadow:0 0 8px var(--neon),0 0 20px rgba(0,213,255,0.7);
-      margin:10px 0;
-    }
-
-    .subtitle{color:var(--muted);font-size:1.05rem}
-
-    .intro{font-size:1.15rem;color:#d7e6ea;max-width:820px;margin:auto}
-
-    .langs{
-      display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:12px
-    }
-    .lang{
-      padding:12px 18px;
-      border:1px solid rgba(0,213,255,0.3);
-      border-radius:12px;
-      color:var(--neon);
-      font-weight:700;
-      background:rgba(0,213,255,0.05);
-      transition:0.3s;
-    }
-    .lang:hover{background:rgba(0,213,255,0.15);transform:scale(1.05)}
-
-    .socials {
-      margin-top: 16px;
-      display: flex;
-      gap: 14px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .socials a {
-      padding: 10px 18px;
-      border: 1px solid rgba(0,213,255,0.4);
-      border-radius: 10px;
-      color: var(--neon);
-      font-weight: 600;
-      background: rgba(0,213,255,0.05);
-      text-shadow: 0 0 8px rgba(0,213,255,0.6);
-      transition: 0.3s;
-      text-decoration: none;
-    }
-
-    .socials a:hover {
-      background: rgba(0,213,255,0.15);
-      box-shadow: 0 0 15px rgba(0,213,255,0.5);
-      transform: scale(1.05);
-    }
-
-    footer{text-align:center;color:var(--muted);padding:30px 0 60px}
-  </style>
+/* Footer */
+footer{text-align:center;color:var(--muted);padding:30px 0 60px;}
+</style>
 </head>
 <body>
 
-  <canvas id="bg-canvas"></canvas>
+<canvas id="bg-canvas"></canvas>
 
-  <nav class="nav">
-    <a href="#sec1">About Me</a>
-    <a href="#sec2">Hello</a>
-    <a href="#sec3">Languages</a>
-  </nav>
+<nav class="nav">
+  <a href="#sec1">About Me</a>
+  <a href="#sec2">Hello</a>
+  <a href="#sec3">Skills</a>
+  <a href="#sec4">Languages</a>
+</nav>
 
-  <div class="container">
+<div class="container">
 
-    <section id="sec1">
-      <div class="card">
-        <div class="subtitle">My Name</div>
-        <h1 class="name">LRpLis</h1>
-        <div class="socials">
-          <a href="https://discordapp.com/users/1347324620495126630" target="_blank">Discord</a>
-          <a href="https://discord.gg/fejskCxXta" target="_blank">Discord Server</a>
-          <a href="https://www.instagram.com/ty.fc?igsh=MXFteWZmdXkwNXVqdQ==" target="_blank">Instagram</a>
-        </div>
+  <!-- About Me -->
+  <section id="sec1">
+    <div class="card">
+      <div class="subtitle">My Name</div>
+      <h1 class="name">LRpLis</h1>
+      <div class="socials">
+        <a href="https://discordapp.com/users/1347324620495126630" target="_blank">Discord</a>
+        <a href="https://discord.gg/fejskCxXta" target="_blank">Discord Server</a>
+        <a href="https://www.instagram.com/ty.fc?igsh=MXFteWZmdXkwNXVqdQ==" target="_blank">Instagram</a>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="sec2">
-      <div class="card">
-        <h2 class="subtitle">Hello</h2>
-        <p class="intro">Hi! I am a developer, currently improving my programming skills 😁</p>
+  <!-- Hello -->
+  <section id="sec2">
+    <div class="card">
+      <h2 class="subtitle">Hello</h2>
+      <p class="intro">Hi! I am a developer, currently improving my programming skills 😁</p>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="sec3">
+    <div class="card">
+      <h2 class="subtitle">Skills</h2>
+      <div class="skills-list">
+        <h3>Front-end</h3>
+        <ul>
+          <li>Website Development</li>
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>JavaScript</li>
+        </ul>
+        <h3>Tools & Platforms</h3>
+        <ul>
+          <li>Photoshop</li>
+          <li>Discord.js</li>
+          <li>2D Games</li>
+          <li>MC Server</li>
+        </ul>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="sec3">
-      <div class="card">
-        <h2 class="subtitle">Languages</h2>
-        <div class="langs">
-          <div class="lang">JavaScript</div>
-          <div class="lang">Lua</div>
-          <div class="lang">C#</div>
-        </div>
-        <p style="margin-top:16px;color:#9aa3aa">These are the languages I currently know – my goal is to learn Java.</p>
+  <!-- Languages -->
+  <section id="sec4">
+    <div class="card">
+      <h2 class="subtitle">Languages</h2>
+      <div class="langs">
+        <div class="lang">JavaScript</div>
+        <div class="lang">Lua</div>
+        <div class="lang">C#</div>
       </div>
-    </section>
+      <p style="margin-top:16px;color:var(--muted)">These are the languages I currently know – my goal is to learn Java.</p>
+    </div>
+  </section>
 
-    <footer>© <strong>LRpLis</strong> | 2025</footer>
-  </div>
+  <footer>© <strong>LRpLis</strong> | 2025</footer>
+</div>
 
-  <script>
-    const canvas=document.getElementById("bg-canvas");
-    const ctx=canvas.getContext("2d");
-    let w,h,particles=[];
-    function resize(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight}
-    window.addEventListener("resize",resize);resize();
+<script>
+const canvas=document.getElementById("bg-canvas");
+const ctx=canvas.getContext("2d");
+let w,h,particles=[];
+function resize(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;}
+window.addEventListener("resize",resize);resize();
 
-    class Particle{
-      constructor(){this.x=Math.random()*w;this.y=Math.random()*h;this.vx=(Math.random()-0.5)*0.6;this.vy=(Math.random()-0.5)*0.6}
-      update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>w)this.vx*=-1;if(this.y<0||this.y>h)this.vy*=-1}
-      draw(){ctx.beginPath();ctx.arc(this.x,this.y,2,0,Math.PI*2);ctx.fillStyle="rgba(0,213,255,0.7)";ctx.fill()}
-    }
+class Particle{
+  constructor(){
+    this.x=Math.random()*w;
+    this.y=Math.random()*h;
+    this.vx=(Math.random()-0.5)*0.5;
+    this.vy=(Math.random()-0.5)*0.5;
+  }
+  update(){
+    this.x+=this.vx; this.y+=this.vy;
+    if(this.x<0||this.x>w)this.vx*=-1;
+    if(this.y<0||this.y>h)this.vy*=-1;
+  }
+  draw(){
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,1.5,0,Math.PI*2);
+    ctx.fillStyle="rgba(255,77,77,0.5)";
+    ctx.fill();
+  }
+}
 
-    for(let i=0;i<70;i++)particles.push(new Particle())
+for(let i=0;i<50;i++)particles.push(new Particle());
 
-    function animate(){
-      ctx.clearRect(0,0,w,h)
-      for(let p of particles){p.update();p.draw()}
-      for(let i=0;i<particles.length;i++){
-        for(let j=i+1;j<particles.length;j++){
-          let dx=particles[i].x-particles[j].x
-          let dy=particles[i].y-particles[j].y
-          let dist=Math.sqrt(dx*dx+dy*dy)
-          if(dist<120){
-            ctx.beginPath()
-            ctx.moveTo(particles[i].x,particles[i].y)
-            ctx.lineTo(particles[j].x,particles[j].y)
-            ctx.strokeStyle="rgba(0,213,255,"+(1-dist/120)*0.3+")"
-            ctx.stroke()
-          }
-        }
-      }
-      requestAnimationFrame(animate)
-    }
-    animate()
-  </script>
+function animate(){
+  ctx.clearRect(0,0,w,h);
+  for(let p of particles){p.update();p.draw();}
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+
 </body>
 </html>

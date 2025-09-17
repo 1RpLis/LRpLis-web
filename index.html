@@ -19,14 +19,34 @@ body,html{margin:0;padding:0;height:100%;scroll-behavior:smooth;font-family:"Cai
 #bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
 .container{max-width:1000px;margin:0 auto;padding:40px 24px;}
 
+/* Navbar */
 .nav{
-  display:flex;gap:12px;align-items:center;position:fixed;top:18px;right:24px;z-index:100;
-  background:rgba(5,10,15,0.6);padding:8px 12px;border-radius:999px;border:1px solid rgba(0,255,127,0.3);
-  backdrop-filter: blur(8px);transition:0.3s;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:100;
+  background:rgba(5,10,15,0.6);
+  padding:6px 12px;
+  border-radius:999px;
+  border:1px solid rgba(0,255,127,0.3);
+  backdrop-filter: blur(8px);
+  transition:0.3s;
+  font-size:0.85rem;
+  flex-wrap:wrap;   /* يسمح بالنزول لسطر ثاني إذا الشاشة صغيرة */
+  max-width:95%;    /* يمنع الطلوع برا الشاشة */
 }
 .nav a{
-  color:var(--muted);font-weight:600;font-size:0.95rem;padding:6px 10px;border-radius:8px;text-decoration:none;
+  color:var(--muted);
+  font-weight:600;
+  font-size:0.85rem;
+  padding:4px 8px;
+  border-radius:8px;
+  text-decoration:none;
   transition:0.3s;
+  white-space:nowrap; /* يخلي النص ما ينكسر */
 }
 .nav a:hover{color:var(--neon);text-shadow:0 0 10px var(--neon),0 0 20px rgba(0,255,255,0.5);}
 
@@ -82,19 +102,20 @@ footer{text-align:center;color:var(--muted);padding:30px 0 60px;}
 
 <canvas id="bg-canvas"></canvas>
 
+<!-- Navbar -->
 <nav class="nav">
-  <a href="#sec1">About Me</a>
-  <a href="#sec2">Hello</a>
+  <a href="#sec0">Socials</a>
+  <a href="#sec1">Me</a>
   <a href="#sec3">Skills</a>
   <a href="#sec4">Languages</a>
+  <a href="#sec5">Achievements</a>
 </nav>
 
 <div class="container">
 
-  <section id="sec1">
+  <!-- Social Links Top -->
+  <section id="sec0">
     <div class="card">
-      <div class="subtitle">My Name</div>
-      <h1 class="name">LRpLis</h1>
       <div class="socials">
         <a href="https://discordapp.com/users/1347324620495126630" target="_blank">Discord</a>
         <a href="https://discord.gg/fejskCxXta" target="_blank">Discord Server</a>
@@ -103,13 +124,16 @@ footer{text-align:center;color:var(--muted);padding:30px 0 60px;}
     </div>
   </section>
 
-  <section id="sec2">
+  <!-- About Me -->
+  <section id="sec1">
     <div class="card">
-      <h2 class="subtitle">Hello</h2>
+      <div class="subtitle">My Name</div>
+      <h1 class="name">LRpLis</h1>
       <p class="intro">Hi! I am a developer, currently improving my programming skills 😁</p>
     </div>
   </section>
 
+  <!-- Skills -->
   <section id="sec3">
     <div class="card">
       <h2 class="subtitle">Skills</h2>
@@ -132,6 +156,7 @@ footer{text-align:center;color:var(--muted);padding:30px 0 60px;}
     </div>
   </section>
 
+  <!-- Languages -->
   <section id="sec4">
     <div class="card">
       <h2 class="subtitle">Languages</h2>
@@ -140,10 +165,15 @@ footer{text-align:center;color:var(--muted);padding:30px 0 60px;}
         <div class="lang">Lua</div>
         <div class="lang">C#</div>
       </div>
-      <p style="margin-top:16px;color:#9aa3aa">
-        These are the languages I currently know – my goal is to learn 
-        <span class="highlight">Java</span>.
-      </p>
+    </div>
+  </section>
+
+  <!-- Achievements -->
+  <section id="sec5">
+    <div class="card">
+      <h2 class="subtitle">Achievements</h2>
+      <p class="intro">Learning <span class="highlight">C++</span></p>
+      <p class="intro">Learning <span class="highlight">Java</span></p>
     </div>
   </section>
 

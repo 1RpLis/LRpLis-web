@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculator</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #0a0a0a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  .calculator {
+    background: #111;
+    border-radius: 20px;
+    padding: 25px;
+    width: 320px;
+    box-shadow: 0 0 10px #00ff99, 0 0 20px #00ccff;
+  }
+
+  .display {
+    background: #1c1c1c;
+    color: #00ff99;
+    font-size: 2rem;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: right;
+    margin-bottom: 18px;
+    text-shadow: 0 0 5px #00ff99;
+    overflow-x: auto;
+  }
+
+  .buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .buttons button {
+    padding: 18px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    color: #fff;
+    background: #222;
+    box-shadow: 0 0 5px #00ff99;
+    transition: 0.2s;
+  }
+
+  .buttons button:active {
+    transform: translateY(2px);
+    box-shadow: 0 0 3px #00ff99;
+  }
+
+  .operator {
+    background: #333;
+    color: #ff9500;
+    box-shadow: 0 0 5px #ff9500;
+  }
+
+  .equal {
+    background: #2e2;
+    color: #fff;
+    grid-column: span 2;
+    box-shadow: 0 0 5px #2e2;
+  }
+
+  .clear {
+    background: #900;
+    color: #fff;
+    box-shadow: 0 0 5px #900;
+  }
+</style>
+</head>
+<body>
+
+<div class="calculator">
+  <div id="display" class="display">0</div>
+  <div class="buttons">
+    <button class="clear" onclick="clearDisplay()">C</button>
+    <button class="operator" onclick="pressOperator('/')">÷</button>
+    <button class="operator" onclick="pressOperator('*')">×</button>
+    <button class="operator" onclick="pressOperator('-')">-</button>
+
+    <button onclick="pressNumber(7)">7</button>
+    <button onclick="pressNumber(8)">8</button>
+    <button onclick="pressNumber(9)">9</button>
+    <button class="operator" onclick="pressOperator('+')">+</button>
+
+    <button onclick="pressNumber(4)">4</button>
+    <button onclick="pressNumber(5)">5</button>
+    <button onclick="pressNumber(6)">6</button>
+    <button class="equal" onclick="calculate()">=</button>
+
+    <button onclick="pressNumber(1)">1</button>
+    <button onclick="pressNumber(2)">2</button>
+    <button onclick="pressNumber(3)">3</button>
+
+    <button onclick="pressNumber(0)" style="grid-column: span 2;">0</button>
+    <button onclick="pressNumber('.')">.</button>
+  </div>
+</div>
+
+<script>
+  let current = '';
+  let operator = '';
+  let firstNum = null;
+
+  function pressNumber(num) {
+    current += num;
+    updateDisplay();
+  }
+
+  function pressOperator(op) {
+    if (firstNum === null) {
+      firstNum = parseFloat(current);
+      operator = op;
+      current = '';
+    } else {
+      calculate();
+      operator = op;
+    }
+  }
+
+  function calculate() {
+    if (firstNum === null || current === '') return;
+    let secondNum = parseFloat(current);
+    switch(operator) {
+      case '+': firstNum += secondNum; break;
+      case '-': firstNum -= secondNum; break;
+      case '*': firstNum *= secondNum; break;
+      case '/': firstNum /= secondNum; break;
+    }
+    current = '';
+    operator = '';
+    updateDisplay(firstNum);
+  }
+
+  function clearDisplay() {
+    current = '';
+    firstNum = null;
+    operator = '';
+    updateDisplay(0);
+  }
+
+  function updateDisplay(value = current) {
+    document.getElementById('display').innerText = value;
+  }
+</script>
+
+</body>
+</html>
